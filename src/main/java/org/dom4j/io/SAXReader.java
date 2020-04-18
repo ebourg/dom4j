@@ -30,6 +30,8 @@ import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.DefaultHandler;
 import org.xml.sax.helpers.XMLReaderFactory;
 
+import javax.xml.parsers.SAXParserFactory;
+
 /**
  * <code>SAXReader</code> creates a DOM4J tree from SAX parsing events.
  *
@@ -117,17 +119,76 @@ public class SAXReader {
     /** The SAX filter used to filter SAX events */
     private XMLFilter xmlFilter;
 
+    public static SAXReader createDefault() {
+        SAXReader reader = new SAXReader();
+        try {
+            reader.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
+            reader.setFeature("http://xml.org/sax/features/external-general-entities", false);
+            reader.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+        } catch (SAXException e) {
+            // nothing to do, incompatible reader
+        }
+        return reader;
+    }
+
+    /**
+     * This method internally calls {@link SAXParserFactory}{@code .newInstance().newSAXParser().getXMLReader()} or {@link XMLReaderFactory#createXMLReader()}.
+     * Be sure to configure returned reader if the default configuration does not suit you. Consider setting the following properties:
+     *
+     * <pre>
+     * reader.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
+     * reader.setFeature("http://xml.org/sax/features/external-general-entities", false);
+     * reader.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+     * </pre>
+     */
     public SAXReader() {
     }
 
+    /**
+     * This method internally calls {@link SAXParserFactory}{@code .newInstance().newSAXParser().getXMLReader()} or {@link XMLReaderFactory#createXMLReader()}.
+     * Be sure to configure returned reader if the default configuration does not suit you. Consider setting the following properties:
+     *
+     * <pre>
+     * reader.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
+     * reader.setFeature("http://xml.org/sax/features/external-general-entities", false);
+     * reader.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+     * </pre>
+     *
+     * @param validating
+     */
     public SAXReader(boolean validating) {
         this.validating = validating;
     }
 
+    /**
+     * This method internally calls {@link SAXParserFactory}{@code .newInstance().newSAXParser().getXMLReader()} or {@link XMLReaderFactory#createXMLReader()}.
+     * Be sure to configure returned reader if the default configuration does not suit you. Consider setting the following properties:
+     *
+     * <pre>
+     * reader.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
+     * reader.setFeature("http://xml.org/sax/features/external-general-entities", false);
+     * reader.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+     * </pre>
+     *
+     * @param factory
+     */
     public SAXReader(DocumentFactory factory) {
         this.factory = factory;
     }
 
+    /**
+     * This method internally calls {@link SAXParserFactory}{@code .newInstance().newSAXParser().getXMLReader()} or {@link XMLReaderFactory#createXMLReader()}.
+     * Be sure to configure returned reader if the default configuration does not suit you. Consider setting the following properties:
+     *
+     * <pre>
+     * reader.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
+     * reader.setFeature("http://xml.org/sax/features/external-general-entities", false);
+     * reader.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+     * </pre>
+     *
+     * @param factory
+     * @param validating
+     */
     public SAXReader(DocumentFactory factory, boolean validating) {
         this.factory = factory;
         this.validating = validating;

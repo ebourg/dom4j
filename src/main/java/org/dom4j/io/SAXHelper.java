@@ -13,6 +13,8 @@ import org.xml.sax.SAXNotSupportedException;
 import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.XMLReaderFactory;
 
+import javax.xml.parsers.SAXParserFactory;
+
 /**
  * <p>
  * <code>SAXHelper</code> contains some helper methods for working with SAX
@@ -61,7 +63,16 @@ class SAXHelper {
     /**
      * Creats a default XMLReader via the org.xml.sax.driver system property or
      * JAXP if the system property is not set.
-     * 
+     *
+     * This method internally calls {@link SAXParserFactory}{@code .newInstance().newSAXParser().getXMLReader()} or {@link XMLReaderFactory#createXMLReader()}.
+     * Be sure to configure returned reader if the default configuration does not suit you. Consider setting the following properties:
+     *
+     * <pre>
+     * reader.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
+     * reader.setFeature("http://xml.org/sax/features/external-general-entities", false);
+     * reader.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+     * </pre>
+     *
      * @param validating
      *            DOCUMENT ME!
      * 
